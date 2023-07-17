@@ -7,8 +7,10 @@ export default function HomePage() {
   const [account, setAccount] = useState(undefined);
   const [atm, setATM] = useState(undefined);
   const [balance, setBalance] = useState(undefined);
+  const [transferTo, setTransferTo] = useState(undefined);
+  const [transferOwnershipTo, settransferOwnershipTo] = useState(undefined);
 
-  const contractAddress = "0xdd2fd4581271e230360230f9337d5c0430bf44c0";
+  const contractAddress = "0x70997970C51812dc3A010C7d01b50e0d17dc79C8";
   const atmABI = atm_abi.abi;
 
   const getWallet = async() => {
@@ -61,7 +63,7 @@ export default function HomePage() {
 
   const deposit = async() => {
     if (atm) {
-      let tx = await atm.deposit(1);
+      let tx = await atm.deposit(10);
       await tx.wait()
       getBalance();
     }
@@ -69,11 +71,50 @@ export default function HomePage() {
 
   const withdraw = async() => {
     if (atm) {
-      let tx = await atm.withdraw(1);
+      let tx = await atm.withdraw(10);
       await tx.wait()
       getBalance();
     }
   }
+
+  const increaseBalance = async() => {
+    if (atm) {
+      let tx = await atm.increaseBalance(10);
+      await tx.wait()
+      getBalance();
+    }
+  }
+
+  const decreaseBalance = async() => {
+    if (atm) {
+      let tx = await atm.decreaseBalance(10);
+      await tx.wait()
+      getBalance();
+    }
+  }
+  const getOwner = async() => {
+    if (atm) {
+      atm.getOwner();
+      
+      
+    }
+  }
+
+  const transfer = async () => {
+    if (atm) {
+      let tx = await atm.transfer(transferTo,10);
+      await tx.wait()
+      getBalance();
+    }
+  };
+
+  const transferOwnership = async () => {
+    if (atm) {
+      let tx = await atm.transferOwnership(transferOwnershipTo);
+      await tx.wait()
+      getBalance();
+    }
+  };
 
   const initUser = () => {
     // Check to see if user has Metamask
@@ -94,8 +135,39 @@ export default function HomePage() {
       <div>
         <p>Your Account: {account}</p>
         <p>Your Balance: {balance}</p>
-        <button onClick={deposit}>Deposit 1 ETH</button>
-        <button onClick={withdraw}>Withdraw 1 ETH</button>
+        <button onClick={deposit}>Deposit  ETH</button>
+        <div>
+        <button onClick={withdraw}>Withdraw  ETH</button>
+        </div>
+        <div>
+        <button onClick={increaseBalance}>increaseBalance  ETH</button>
+        </div>
+        <div>
+        <button onClick={decreaseBalance}>decreaseBalance  ETH</button>
+        </div>
+        <div>
+        <button onClick={getOwner}> get Owner</button>
+        </div>
+        <div>
+        <label htmlFor="transferTo">Transfer To:</label>
+        <input
+          type="text"
+          id="transferTo"
+          value={transferTo}
+          onChange={(e) => setTransferTo(e.target.value)}
+        />
+        <button onClick={transfer}>Transfer1 ETH</button>
+      </div>
+      <div>
+        <label htmlFor="transferOwnershipTo">transferOwnershipTo:</label>
+        <input
+          type="text"
+          id="transferOwnershipTo"
+          value={transferOwnershipTo}
+          onChange={(e) => settransferOwnershipTo(e.target.value)}
+        />
+        <button onClick={transferOwnership}>transferOwnershipTo</button>
+      </div>
       </div>
     )
   }
@@ -104,7 +176,7 @@ export default function HomePage() {
 
   return (
     <main className="container">
-      <header><h1>Welcome to the Metacrafters ATM!</h1></header>
+      <header><h1>Welcome to the ISHAN Metacrafters ATM!(for easy transaction)</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
