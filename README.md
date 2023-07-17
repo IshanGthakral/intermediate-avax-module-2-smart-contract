@@ -1,12 +1,17 @@
 
 
-###implimentation
+implimentation
 
 run some code
+
 npm init -y
+
 npm install --save-dev hardhat
+
 npx hardhat node(for connecting with hardhat server)
+
 npx hardhat run --network loccalhost scripts/deploy.js(for deploying and connecting with localhost)
+
 npm run dev(for frontend)
 
 # Starter Next/Hardhat Project
